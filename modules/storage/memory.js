@@ -1,7 +1,8 @@
 module.exports = function(myApp){
+    var debug = require('debug')('module:storage:memory');
 
     if (typeof myApp.storage !== "undefined") {
-        myApp.utils.consoleOutput('module/storage/memory :: WARN :: storage '+myApp.storage.module+' already loaded.  module not loaded...');
+        debug(':: WARN :: storage '+myApp.storage.module+' already loaded.  module not loaded...');
         return;
     }
 
@@ -9,24 +10,29 @@ module.exports = function(myApp){
     var memory = {};
 
     storage.initialize = function(){
-
-        myApp.utils.consoleOutput("module/storage/memory has been initialized...");
+        debug('initialized...');
     };
 
     storage.get = function(field, callback) {
         if (typeof memory[field] !== "undefined") {
+            debug('get() - ' + field + ' exists');
             callback(null, memory[field]);
-            return;
+        } else {
+            debug('get() - ' + field + ' does NOT exist');
+            callback(true, undefined);
         }
+        return;
     };
 
     storage.set = function(field, data, callback) {
+        debug('set() - ' + field);
         memory[field] = data;
         if (typeof callback == "function") {
             callback(null, true);
         }
+        return;
     };
 
     myApp.storage = storage;
-    myApp.utils.consoleOutput("module/storage/memory has been loaded...");
+    debug('loaded...');
 };
