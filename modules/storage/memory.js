@@ -16,19 +16,30 @@ module.exports = function(myApp){
     storage.get = function(field, callback) {
         if (typeof memory[field] !== "undefined") {
             debug('get() - ' + field + ' exists');
-            callback(null, memory[field]);
+            if (typeof callback === "function") {
+                process.nextTick(function() { callback(null, memory[field]) });
+            }
         } else {
             debug('get() - ' + field + ' does NOT exist');
-            callback(true, undefined);
+            if (typeof callback === "function") {
+                process.nextTick(function() { callback(true, undefined) });
+            }
         }
         return;
     };
 
     storage.set = function(field, data, callback) {
-        debug('set() - ' + field);
         memory[field] = data;
-        if (typeof callback == "function") {
-            callback(null, true);
+        if (memory[field] === data) {
+            debug('set() - success : ' + field);
+            if (typeof callback === "function") {
+                process.nextTick(function() { callback(null, memory[field]) });
+            }
+        } else {
+            debug('set() - failed : ' + field);
+            if (typeof callback === "function") {
+                process.nextTick(function() { callback(true, undefined) });
+            }
         }
         return;
     };
