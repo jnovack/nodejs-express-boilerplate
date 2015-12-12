@@ -1,8 +1,9 @@
 module.exports = function(myApp) {
     var nsp_template = myApp.webserver.io.of('/template');
+    var debug = require('debug')('module:sockets:audit');
 
     nsp_template.on('connection', function(socket){
-        myApp.utils.consoleOutput("module/sockets/template :: INFO :: connection on socket.io/template for socket " + socket.id);
+        debug("connection on socket.io/template for socket " + socket.id);
 
         socket.custom = {
             room: null,
@@ -14,40 +15,41 @@ module.exports = function(myApp) {
             if (typeof data === "string") { data = { room: data }; }
 
             if (socket.custom.room) {
-              myApp.utils.consoleOutput("module/sockets/template :: DBUG :: socket " + socket.id + " left " + socket.custom.room);
+              debug("socket " + socket.id + " left " + socket.custom.room);
               socket.leave(socket.custom.room);
             }
 
             socket.join(data.room);
             socket.custom.room = data.room;
 
-            myApp.utils.consoleOutput("module/sockets/template :: DBUG :: socket " + socket.id + " joined " + socket.custom.room);
+            debug("socket " + socket.id + " joined " + socket.custom.room);
             socket.emit('joined', socket.custom.room);
 
             if ((typeof data === "object") && (data.admin === true)) {
-                myApp.utils.consoleOutput("module/sockets/template :: INFO :: socket " + socket.id + " in " + socket.custom.room + " is admin");
+                debug("socket " + socket.id + " in " + socket.custom.room + " is admin");
                 socket.custom.isAdmin = true;
             }
 
             myApp.storage.get(socket.custom.room, function(err, json) {
-                json = myApp.utils.tryJSONParse(json);            // TODO Don't trust parsing.
-                myApp.utils.consoleOutput("module/sockets/template :: DBUG :: template: onJoin get", json);
-                if (json !== null) {
-                    if (typeof json.setting !== "undefined") {
-                        myApp.utils.each(json.setting, function(value) {
-                            myApp.utils.consoleOutput("module/sockets/template :: DBUG :: template: onJoin get each: ", value);
-                            socket.emit('setting', value);
-                        });
-                    }
-                    if (typeof json.state !== "undefined") {
-                        myApp.utils.each(json.state, function(value) {
-                            myApp.utils.consoleOutput("module/sockets/template :: DBUG :: template: onJoin get each: ", value);
-                            socket.emit('state', value);
-                        });
+                if (!err) {
+                    json = myApp.utils.tryJSONParse(json);            // TODO Don't trust parsing.
+                    debug("template: onJoin get", json);
+                    if (json !== null) {
+                        if (typeof json.setting !== "undefined") {
+                            myApp.utils.each(json.setting, function(value) {
+                                debug("template: onJoin get each: ", value);
+                                socket.emit('setting', value);
+                            });
+                        }
+                        if (typeof json.state !== "undefined") {
+                            myApp.utils.each(json.state, function(value) {
+                                debug("template: onJoin get each: ", value);
+                                socket.emit('state', value);
+                            });
+                        }
                     }
                 }
             });
-
         });
 
         socket.on('broadcast', function(message) {
@@ -63,7 +65,7 @@ module.exports = function(myApp) {
     });
 
     makeGetCallback = function(id, message) {
-        myApp.utils.consoleOutput("module/sockets/template :: DBUG :: makeGetCallback", id, message);
+        debug("makeGetCallback", id, message);
         var passthru = { id: id, data: message };
         return function(err, json) {
             json = myApp.utils.tryJSONParse(json);    // TODO Don't trust parsing.
@@ -71,11 +73,11 @@ module.exports = function(myApp) {
                 json[message.event] = {};
             }
             json[message.event][message.data.id] = message.data;
-            myApp.utils.consoleOutput("module/sockets/template :: DBUG :: makeGetCallback: passthru: ", passthru);
-            myApp.utils.consoleOutput("module/sockets/template :: DBUG :: makeGetCallback: json: ", json);
+            debug("makeGetCallback: passthru: ", passthru);
+            debug("makeGetCallback: json: ", json);
             myApp.storage.set(passthru.id, JSON.stringify(json));
         };
     };
 
-    myApp.utils.consoleOutput("module/sockets/template has been loaded...");
+    debug("loaded...");
 };
