@@ -2,6 +2,10 @@ var myApp = { };
 myApp.root = require('path').dirname(require.main.filename);
 myApp.package = require(myApp.root+"/package.json");
 
+// Load global event emitter
+var events = require('events');
+myApp.emitter = new events.EventEmitter();
+
 require("./modules/utils")(myApp);
 
 // Initialize myApp
