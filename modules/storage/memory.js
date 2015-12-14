@@ -17,12 +17,12 @@ module.exports = function(myApp){
         if (typeof memory[field] !== "undefined") {
             debug('get() - ' + field + ' exists');
             if (typeof callback === "function") {
-                process.nextTick(function() { callback(null, memory[field]) });
+                process.nextTick(function() { callback(null, memory[field]); });
             }
         } else {
             debug('get() - ' + field + ' does NOT exist');
             if (typeof callback === "function") {
-                process.nextTick(function() { callback(true, undefined) });
+                process.nextTick(function() { callback(true, undefined); });
             }
         }
         return;
@@ -33,12 +33,12 @@ module.exports = function(myApp){
         if (memory[field] === data) {
             debug('set() - success : ' + field);
             if (typeof callback === "function") {
-                process.nextTick(function() { callback(null, memory[field]) });
+                process.nextTick(function() { callback(null, memory[field]); });
             }
         } else {
             debug('set() - failed : ' + field);
             if (typeof callback === "function") {
-                process.nextTick(function() { callback(true, undefined) });
+                process.nextTick(function() { callback(true, undefined); });
             }
         }
         return;
