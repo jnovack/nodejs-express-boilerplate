@@ -1,4 +1,5 @@
 module.exports = function(myApp){
+    var debug = require('debug')('module:webserver');
     var webserver = {
             widgets: [],
             configurations: [],
@@ -6,7 +7,6 @@ module.exports = function(myApp){
             pageData: [],
             io: {}
         },
-        debug = require('debug')('webserver'),
         // passport = require('passport'),
         express = require('express'),
         jade = require("jade");
@@ -97,13 +97,13 @@ module.exports = function(myApp){
         });
 
         var server = app.listen(myApp.config.PORT);
-        myApp.utils.consoleOutput("webserver started on port "+myApp.config.PORT);
+        debug("webserver started on port " + myApp.config.PORT);
         webserver.io = require('socket.io').listen(server);
-        myApp.utils.consoleOutput("socket.io started on port "+myApp.config.PORT);
+        debug("socket.io started on port " + myApp.config.PORT);
         webserver.app = app;
 
     };
 
     myApp.webserver = webserver;
-    myApp.utils.consoleOutput("module/webserver has been loaded...");
+    debug("loaded...");
 };
