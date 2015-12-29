@@ -226,6 +226,25 @@ module.exports = function(myApp){
         if (isArrayLike(obj) && (utils.isArray(obj)) ) return obj.length === 0;
         return utils.keys(obj).length === 0;
     };
+
+    /**
+     * Converts decimal number to hex with zero padding
+     *
+     * @private
+     * @method decimalToHex
+     * @param {Number} d Decimal number to convert
+     * @param {Number} padding How many zeros to use for padding
+     * @return {String} Decimal number converted to hex string
+    */
+    utils.decimalToHex = function(d, padding) {
+        var hex = Number(d).toString(16);
+        padding = typeof (padding) === "undefined" || padding === null ? padding = 2 : padding;
+        while (hex.length < padding) {
+            hex = "0" + hex;
+        }
+        return hex;
+    };
+
     /** end underscore.js functions **/
 
     myApp.utils = utils;
