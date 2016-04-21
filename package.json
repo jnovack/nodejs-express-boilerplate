@@ -1,6 +1,6 @@
 {
   "name": "nodejs-express-boilerplate",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "author": "Justin J. Novack <jnovack@gmail.com>",
   "description": "Basic structure of a node.js web application with Express.",
   "scripts": {
