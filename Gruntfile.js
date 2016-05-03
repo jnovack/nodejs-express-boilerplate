@@ -1,4 +1,5 @@
 module.exports = function(grunt) {
+    grunt.option('color', true);
 
     // Project configuration.
     grunt.initConfig({
@@ -7,7 +8,7 @@ module.exports = function(grunt) {
             dev: {
                 script: 'index.js',
                 options: {
-                    watch: ['index.js', 'modules/**'],
+                    watch: ['index.js', 'modules/**/*.js'],
                     ext: 'js',
                     ignore: ['node_modules/**', 'modules/webserver/public/**'],
                     env: {
@@ -64,7 +65,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-simple-mocha');
 
     // Grunt task(s).
-    grunt.registerTask('default', ['concurrent:dev']);
+    grunt.registerTask('default', ['jshint', 'nodemon:dev']);
     grunt.registerTask('lint', ['jshint']);
     grunt.registerTask('test', ['simplemocha']);
 };
