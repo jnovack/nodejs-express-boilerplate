@@ -23,7 +23,6 @@ myApp.utils.consoleOutput("Initializing...");
 // Save environment into a structure
 myApp.config = process.env;
 
-
 /***
  *  Initialize direct database access
  ***/

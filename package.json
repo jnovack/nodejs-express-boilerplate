@@ -1,6 +1,6 @@
 {
   "name": "nodejs-express-boilerplate",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "author": "Justin J. Novack <jnovack@gmail.com>",
   "description": "Basic structure of a node.js web application with Express.",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jnovack/nodejs-express-boilerplate"
+    "url": "git+https://github.com/jnovack/nodejs-express-boilerplate.git"
   },
   "bugs": {
     "url": "https://github.com/jnovack/nodejs-express-boilerplate/issues"
@@ -19,9 +19,11 @@
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.0",
     "debug": "^2.2.0",
+    "expire-memory": "0.0.3",
     "express": "^4.13.3",
     "express-session": "^1.12.1",
     "jade": "^1.11.0",
+    "json-stringify-safe": "^5.0.1",
     "moment": "^2.10.6",
     "morgan": "^1.6.1",
     "serve-favicon": "^2.3.0",
@@ -34,5 +36,7 @@
     "grunt-contrib-watch": "latest",
     "grunt-nodemon": "latest",
     "grunt-simple-mocha": "latest"
-  }
+  },
+  "homepage": "https://github.com/jnovack/nodejs-express-boilerplate#readme",
+  "main": "index.js"
 }

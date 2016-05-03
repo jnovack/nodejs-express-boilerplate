@@ -3,6 +3,9 @@ module.exports = function(myApp){
         path = require('path'),
         fs = require("fs");
 
+    utils.stringify = require('json-stringify-safe');
+    utils.memcache = require('expire-memory');
+
     utils.console = {};
 
     utils.noop = function(){};

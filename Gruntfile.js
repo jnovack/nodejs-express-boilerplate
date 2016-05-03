@@ -30,7 +30,7 @@ module.exports = function(grunt) {
         jshint: {
             all: ['**/*.js', '**/*.json', '*.json', '!node_modules/**', '!modules/webserver/public/**', '!bower_components/**'],
             options: {
-                ignore: ['node_modules/**', 'modules/webserver/public/**', 'bower_components/**']
+                esversion: 6
             }
         },
         concurrent: {
@@ -65,5 +65,6 @@ module.exports = function(grunt) {
 
     // Grunt task(s).
     grunt.registerTask('default', ['concurrent:dev']);
+    grunt.registerTask('lint', ['jshint']);
     grunt.registerTask('test', ['simplemocha']);
 };
