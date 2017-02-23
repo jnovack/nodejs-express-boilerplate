@@ -23,6 +23,9 @@ myApp.utils.consoleOutput("Initializing...");
 // Save environment into a structure
 myApp.config = process.env;
 
+if (myApp.config.DEBUG === undefined) {
+    myApp.utils.consoleOutput("DEBUG is OFF - To enable debugging, set the DEBUG environment variable.");
+}
 /***
  *  Initialize direct database access
  ***/
