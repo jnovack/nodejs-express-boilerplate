@@ -9,7 +9,7 @@ module.exports = function(myApp){
         },
         // passport = require('passport'),
         express = require('express'),
-        jade = require("jade");
+        pug = require("pug");
 
     webserver.initialize = function(){
 
@@ -33,11 +33,11 @@ module.exports = function(myApp){
         var favicon = require('serve-favicon');
         app.use(favicon(__dirname + '/public/favicon.ico'));
 
-        app.set('view engine', 'jade');
+        app.set('view engine', 'pug');
         app.set('views', __dirname + '/views');
 
         app.use(function(req, res, next){
-            // Allow the jade templates access to myApp
+            // Allow the pug templates access to myApp
             res.locals.myApp = myApp;
             next();
         });
@@ -52,7 +52,7 @@ module.exports = function(myApp){
         // app.use(passport.initialize());
         // app.use(passport.session());
 
-        // Load other functions so Jade can use them
+        // Load other functions so pug can use them
         app.locals.moment = require("moment");
 
         // Router

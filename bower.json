@@ -2,9 +2,9 @@
   "name": "nodejs-express-boilerplate",
   "private": true,
   "dependencies": {
-    "bootstrap": "~3.3.6",
-    "font-awesome": "~4.5.0",
-    "animate.css": "animate-css#~3.4.0",
-    "moment": "~2.10.6"
+    "bootstrap": "~3.3.7",
+    "font-awesome": "~4.7.0",
+    "animate.css": "animate-css#~3.5.2",
+    "moment": "~2.17.1"
   }
 }
